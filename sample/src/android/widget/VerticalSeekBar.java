@@ -51,7 +51,7 @@ public class VerticalSeekBar extends SeekBar {
             	i=getMax() - (int) (getMax() * event.getY() / getHeight());
                 setProgress(i);
                 Log.i("Progress",getProgress()+"");
-                onSizeChanged(getWidth(), getHeight(), 0, 0);
+                //onSizeChanged(getWidth(), getHeight(), 0, 0);
                 break;
 
             case MotionEvent.ACTION_CANCEL:
@@ -59,5 +59,15 @@ public class VerticalSeekBar extends SeekBar {
         }
         return true;
     }
+    
+    /*Added for to fix following issue:
+      Calling setProgress(int progress) from backhand code doesn't move the slider*/
+    @Override
+    public void setProgress(int i)
+    {
+        super.setProgress(i);
+        onSizeChanged(getWidth(), getHeight(), 0, 0);
+    }
+
     
 }
